@@ -1,8 +1,9 @@
-!**/src/main/**/target/
-!**/src/test/**/target/
-
 ### IntelliJ IDEA ###
 .idea
 *.iws
 *.iml
 *.ipr
+
+### target ###
+/ms-cliente-persona-api/target/
+/ms-cuenta-movimientos-api/target/
