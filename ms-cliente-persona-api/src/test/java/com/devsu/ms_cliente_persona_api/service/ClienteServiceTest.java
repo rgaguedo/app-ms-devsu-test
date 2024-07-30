@@ -1,20 +1,22 @@
 package com.devsu.ms_cliente_persona_api.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
-
 import com.devsu.ms_cliente_persona_api.model.Cliente;
 import com.devsu.ms_cliente_persona_api.repository.ClienteRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.MockitoAnnotations;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
-@ExtendWith(MockitoExtension.class)
-class ClienteServiceTest {
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+
+public class ClienteServiceTest {
 
     @Mock
     private ClienteRepository clienteRepository;
@@ -22,50 +24,58 @@ class ClienteServiceTest {
     @InjectMocks
     private ClienteService clienteService;
 
-    @Test
-    public void testCreateCliente() {
-        Cliente cliente = new Cliente();
-        cliente.setNombre("Jose Lema");
-        cliente.setDireccion("Otavalo sn y principal");
-        cliente.setTelefono("098254785");
-        cliente.setClave("1234");
-        cliente.setEstado(true);
+    private Cliente cliente1;
+    private Cliente cliente2;
 
-        when(clienteRepository.save(cliente)).thenReturn(cliente);
+    @BeforeEach
+    public void setUp() {
+        MockitoAnnotations.openMocks(this);
+        cliente1 = new Cliente();
+        cliente1.setId(1L);
+        cliente1.setNombre("Jose Lema");
+        cliente1.setGenero("Masculino");
+        cliente1.setEdad(30);
+        cliente1.setIdentificacion("1234567890");
+        cliente1.setDireccion("Otavalo sn y principal");
+        cliente1.setTelefono("098254785");
+        cliente1.setClave("1234");
+        cliente1.setEstado(true);
 
-        Cliente createdCliente = clienteService.createCliente(cliente);
-
-        assertThat(createdCliente.getNombre()).isEqualTo("Jose Lema");
-        assertThat(createdCliente.getDireccion()).isEqualTo("Otavalo sn y principal");
-        assertThat(createdCliente.getTelefono()).isEqualTo("098254785");
-        assertThat(createdCliente.getClave()).isEqualTo("1234");
-        assertThat(createdCliente.isEstado()).isTrue();
+        cliente2 = new Cliente();
+        cliente2.setId(2L);
+        cliente2.setNombre("Marianela Montalvo");
+        cliente2.setGenero("Femenino");
+        cliente2.setEdad(28);
+        cliente2.setIdentificacion("0987654321");
+        cliente2.setDireccion("Amazonas y NNUU");
+        cliente2.setTelefono("097548965");
+        cliente2.setClave("5678");
+        cliente2.setEstado(true);
     }
 
     @Test
-    public void testUpdateCliente() {
-        Long id = 1L;
-        Cliente cliente = new Cliente();
-        cliente.setClienteId(id);
-        cliente.setNombre("Jose Lema");
-        cliente.setDireccion("Otavalo sn y principal");
-        cliente.setTelefono("098254785");
-        cliente.setClave("1234");
-        cliente.setEstado(true);
+    public void testFindAll() {
+        when(clienteRepository.findAll()).thenReturn(Arrays.asList(cliente1, cliente2));
+        List<Cliente> clientes = clienteService.findAll();
+        assertEquals(2, clientes.size());
+        verify(clienteRepository, times(1)).findAll();
+    }
 
-        Cliente updatedDetails = new Cliente();
-        updatedDetails.setNombre("Jose Lema Updated");
-        updatedDetails.setClave("4321");
-        updatedDetails.setEstado(false);
+    @Test
+    public void testFindById() {
+        when(clienteRepository.findById(1L)).thenReturn(Optional.of(cliente1));
+        Cliente cliente = clienteService.findById(1L);
+        assertEquals("Jose Lema", cliente.getNombre());
+        verify(clienteRepository, times(1)).findById(1L);
+    }
 
-        when(clienteRepository.findById(id)).thenReturn(Optional.of(cliente));
-        when(clienteRepository.save(cliente)).thenReturn(cliente);
-
-        Cliente updatedCliente = clienteService.updateCliente(id, updatedDetails);
-
-        assertThat(updatedCliente.getNombre()).isEqualTo("Jose Lema Updated");
-        assertThat(updatedCliente.getClave()).isEqualTo("4321");
-        assertThat(updatedCliente.isEstado()).isFalse();
+    @Test
+    public void testSave() {
+        when(clienteRepository.save(any(Cliente.class))).thenReturn(cliente1);
+        Cliente savedCliente = clienteService.save(cliente1);
+        assertNotNull(savedCliente);
+        assertEquals("Jose Lema", savedCliente.getNombre());
+        verify(clienteRepository, times(1)).save(cliente1);
     }
 
 }
