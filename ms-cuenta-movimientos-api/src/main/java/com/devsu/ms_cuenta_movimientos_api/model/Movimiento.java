@@ -3,7 +3,6 @@ package com.devsu.ms_cuenta_movimientos_api.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 public class Movimiento {
