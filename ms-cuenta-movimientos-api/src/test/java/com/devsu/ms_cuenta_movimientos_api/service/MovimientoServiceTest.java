@@ -23,9 +23,6 @@ class MovimientoServiceTest {
     private MovimientoRepository movimientoRepository;
 
     @Mock
-    private ClienteService clienteService;
-
-    @Mock
     private CuentaRepository cuentaRepository;
 
     @InjectMocks
