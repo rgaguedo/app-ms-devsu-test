@@ -1,7 +1,8 @@
 package com.devsu.ms_cliente_persona_api.controller;
 
 import com.devsu.ms_cliente_persona_api.model.Cliente;
-import com.devsu.ms_cliente_persona_api.service.ClienteService;
+import com.devsu.ms_cliente_persona_api.service.impl.ClienteServiceImpl;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,20 +12,20 @@ import java.util.List;
 @RequestMapping("/clientes")
 public class ClienteController {
 
-    private final ClienteService clienteService;
+    private final ClienteServiceImpl clienteService;
 
-    public ClienteController(ClienteService clienteService) {
+    public ClienteController(ClienteServiceImpl clienteService) {
         this.clienteService = clienteService;
     }
 
     @PostMapping
-    public Cliente createCliente(@RequestBody Cliente cliente) {
-        return clienteService.save(cliente);
+    public ResponseEntity<Cliente> createCliente(@RequestBody Cliente cliente) {
+        return new ResponseEntity<>(clienteService.save(cliente), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public Cliente updateCliente(@PathVariable Long id, @RequestBody Cliente clienteDetails) {
-        return clienteService.update(id, clienteDetails);
+    public ResponseEntity<Cliente> updateCliente(@PathVariable Long id, @RequestBody Cliente clienteDetails) {
+        return new ResponseEntity<>(clienteService.update(id, clienteDetails), HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping("/{id}")
@@ -33,13 +34,13 @@ public class ClienteController {
     }
 
     @GetMapping
-    public List<Cliente> getAllClientes() {
-        return clienteService.findAll();
+    public ResponseEntity<List<Cliente>> getAllClientes() {
+        return new ResponseEntity<>(clienteService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public Cliente getClienteById(@PathVariable Long id) {
-        return clienteService.findById(id);
+    public ResponseEntity<Cliente> getClienteById(@PathVariable Long id) {
+        return new ResponseEntity<>(clienteService.findById(id), HttpStatus.OK);
     }
 
 }
