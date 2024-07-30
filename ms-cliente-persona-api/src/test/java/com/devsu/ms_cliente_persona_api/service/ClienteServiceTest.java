@@ -2,8 +2,10 @@ package com.devsu.ms_cliente_persona_api.service;
 
 import com.devsu.ms_cliente_persona_api.model.Cliente;
 import com.devsu.ms_cliente_persona_api.repository.ClienteRepository;
+import com.devsu.ms_cliente_persona_api.service.impl.ClienteServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -16,13 +18,14 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+
 public class ClienteServiceTest {
 
     @Mock
     private ClienteRepository clienteRepository;
 
     @InjectMocks
-    private ClienteService clienteService;
+    private ClienteServiceImpl clienteService;
 
     private Cliente cliente1;
     private Cliente cliente2;
