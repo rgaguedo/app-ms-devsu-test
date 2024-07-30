@@ -4,18 +4,13 @@ import com.devsu.ms_cuenta_movimientos_api.dto.ClienteDTO;
 import com.devsu.ms_cuenta_movimientos_api.exception.ResourceNotFoundException;
 import com.devsu.ms_cuenta_movimientos_api.model.Cuenta;
 import com.devsu.ms_cuenta_movimientos_api.repository.CuentaRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class CuentaService {
-
-    public static final Logger log = LoggerFactory.getLogger(CuentaService.class);
 
     @Autowired
     private CuentaRepository cuentaRepository;
