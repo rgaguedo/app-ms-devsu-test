@@ -1,21 +1,75 @@
 package com.devsu.ms_cuenta_movimientos_api.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import com.devsu.ms_cliente_persona_api.model.Cliente;
 
-@Data
 @Entity
 public class Cuenta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private Long numeroCuenta;
     private String tipoCuenta;
     private double saldoInicial;
     private boolean estado;
+    private Long clienteId;
 
-    @ManyToOne
-    @JoinColumn(name = "cliente_id")
-    private Cliente cliente;
+    public Long getId() {
+        return id;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getNumeroCuenta() {
+        return numeroCuenta;
+    }
+
+    public void setNumeroCuenta(Long numeroCuenta) {
+        this.numeroCuenta = numeroCuenta;
+    }
+
+    public String getTipoCuenta() {
+        return tipoCuenta;
+    }
+
+    public void setTipoCuenta(String tipoCuenta) {
+        this.tipoCuenta = tipoCuenta;
+    }
+
+    public double getSaldoInicial() {
+        return saldoInicial;
+    }
+
+    public void setSaldoInicial(double saldoInicial) {
+        this.saldoInicial = saldoInicial;
+    }
+
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+
+    public Long getClienteId() {
+        return clienteId;
+    }
+
+    public void setClienteId(Long clienteId) {
+        this.clienteId = clienteId;
+    }
+
+    @Override
+    public String toString() {
+        return "Cuenta{" +
+                "id=" + id +
+                ", numeroCuenta=" + numeroCuenta +
+                ", tipoCuenta='" + tipoCuenta + '\'' +
+                ", saldoInicial=" + saldoInicial +
+                ", estado=" + estado +
+                ", clienteId=" + clienteId +
+                '}';
+    }
 }
