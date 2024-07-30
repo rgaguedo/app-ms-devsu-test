@@ -5,7 +5,6 @@ import com.devsu.ms_cliente_persona_api.repository.ClienteRepository;
 import com.devsu.ms_cliente_persona_api.service.impl.ClienteServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
