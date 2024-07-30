@@ -19,27 +19,27 @@ public class ClienteController {
 
     @PostMapping
     public Cliente createCliente(@RequestBody Cliente cliente) {
-        return clienteService.createCliente(cliente);
+        return clienteService.save(cliente);
     }
 
     @PutMapping("/{id}")
     public Cliente updateCliente(@PathVariable Long id, @RequestBody Cliente clienteDetails) {
-        return clienteService.updateCliente(id, clienteDetails);
+        return clienteService.update(id, clienteDetails);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteCliente(@PathVariable Long id) {
-        return clienteService.deleteCliente(id);
+        return clienteService.delete(id);
     }
 
     @GetMapping
     public List<Cliente> getAllClientes() {
-        return clienteService.getAllClientes();
+        return clienteService.findAll();
     }
 
     @GetMapping("/{id}")
     public Cliente getClienteById(@PathVariable Long id) {
-        return clienteService.getClienteById(id);
+        return clienteService.findById(id);
     }
 
 }
