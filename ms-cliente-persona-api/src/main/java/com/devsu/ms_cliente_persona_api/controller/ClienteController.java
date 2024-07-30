@@ -1,6 +1,8 @@
 package com.devsu.ms_cliente_persona_api.controller;
 
-import com.devsu.ms_cliente_persona_api.model.Cliente;
+import com.devsu.ms_cliente_persona_api.controller.dto.ClienteRequestDTO;
+import com.devsu.ms_cliente_persona_api.controller.dto.ClienteResponseDTO;
+import com.devsu.ms_cliente_persona_api.mapper.ClienteMapper;
 import com.devsu.ms_cliente_persona_api.service.impl.ClienteServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,13 +21,13 @@ public class ClienteController {
     }
 
     @PostMapping
-    public ResponseEntity<Cliente> createCliente(@RequestBody Cliente cliente) {
-        return new ResponseEntity<>(clienteService.save(cliente), HttpStatus.CREATED);
+    public ResponseEntity<ClienteResponseDTO> createCliente(@RequestBody ClienteRequestDTO cliente) {
+        return new ResponseEntity<>(ClienteMapper.map.clienteToClienteResponseDTO(clienteService.save(ClienteMapper.map.clienteRequestToCliente(cliente))), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Cliente> updateCliente(@PathVariable Long id, @RequestBody Cliente clienteDetails) {
-        return new ResponseEntity<>(clienteService.update(id, clienteDetails), HttpStatus.ACCEPTED);
+    public ResponseEntity<ClienteResponseDTO> updateCliente(@PathVariable Long id, @RequestBody ClienteRequestDTO cliente) {
+        return new ResponseEntity<>(ClienteMapper.map.clienteToClienteResponseDTO(clienteService.update(id, ClienteMapper.map.clienteRequestToCliente(cliente))), HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping("/{id}")
@@ -34,13 +36,13 @@ public class ClienteController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Cliente>> getAllClientes() {
-        return new ResponseEntity<>(clienteService.findAll(), HttpStatus.OK);
+    public ResponseEntity<List<ClienteResponseDTO>> getAllClientes() {
+        return new ResponseEntity<>(ClienteMapper.map.clienteListToClienteResponseDTO(clienteService.findAll()), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Cliente> getClienteById(@PathVariable Long id) {
-        return new ResponseEntity<>(clienteService.findById(id), HttpStatus.OK);
+    public ResponseEntity<ClienteResponseDTO> getClienteById(@PathVariable Long id) {
+        return new ResponseEntity<>(ClienteMapper.map.clienteToClienteResponseDTO(clienteService.findById(id)), HttpStatus.OK);
     }
 
 }
