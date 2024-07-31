@@ -1,7 +1,9 @@
 package com.devsu.ms_cuenta_movimientos_api.controller;
 
-import com.devsu.ms_cuenta_movimientos_api.model.Movimiento;
-import com.devsu.ms_cuenta_movimientos_api.service.MovimientoService;
+import com.devsu.ms_cuenta_movimientos_api.controller.dto.movimiento.MovimientoRequestDTO;
+import com.devsu.ms_cuenta_movimientos_api.controller.dto.movimiento.MovimientoResponseDTO;
+import com.devsu.ms_cuenta_movimientos_api.mapper.MovimientoMapper;
+import com.devsu.ms_cuenta_movimientos_api.service.impl.MovimientoServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,44 +14,55 @@ import java.util.List;
 @RequestMapping("/movimientos")
 public class MovimientoController {
 
-    private final MovimientoService movimientoService;
+    private final MovimientoServiceImpl movimientoService;
 
-    public MovimientoController(MovimientoService movimientoService) {
+    public MovimientoController(MovimientoServiceImpl movimientoService) {
         this.movimientoService = movimientoService;
     }
 
     @PostMapping
-    public ResponseEntity<?> createMovimiento(@RequestBody Movimiento movimiento) {
+    public ResponseEntity<?> createMovimiento(@RequestBody MovimientoRequestDTO movimiento) {
         try {
-            Movimiento createdMovimiento = movimientoService.createMovimiento(movimiento);
-            return new ResponseEntity<>(createdMovimiento, HttpStatus.CREATED);
+            return new ResponseEntity<>(
+                    MovimientoMapper.map.movimientoToMovimientoResponseDTO(movimientoService.createMovimiento(MovimientoMapper.map.movimientoRequestDTOToMovimiento(movimiento))),
+                    HttpStatus.CREATED
+            );
         } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
     @GetMapping
-    public List<Movimiento> getAllMovimientos() {
-        return movimientoService.getAllMovimientos();
+    public ResponseEntity<List<MovimientoResponseDTO>> getAllMovimientos() {
+        try {
+            return new ResponseEntity<>(
+                    MovimientoMapper.map.movimientoListToMovimientoResponseDTOList(movimientoService.getAllMovimientos()),
+                    HttpStatus.OK
+            );
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Movimiento> getMovimientoById(@PathVariable Long id) {
-        Movimiento movimiento = movimientoService.getMovimientoById(id);
-        if (movimiento != null) {
-            return new ResponseEntity<>(movimiento, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+    public ResponseEntity<MovimientoResponseDTO> getMovimientoById(@PathVariable Long id) {
+        try {
+            return new ResponseEntity<>(
+                    MovimientoMapper.map.movimientoToMovimientoResponseDTO(movimientoService.getMovimientoById(id)),
+                    HttpStatus.OK
+            );
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateMovimiento(@PathVariable Long id, @RequestBody Movimiento movimientoDetails) {
-        Movimiento updatedMovimiento = movimientoService.updateMovimiento(id, movimientoDetails);
-        if (updatedMovimiento != null) {
-            return new ResponseEntity<>(updatedMovimiento, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("Recurso no encontrado", HttpStatus.NOT_FOUND);
+    public ResponseEntity<MovimientoResponseDTO> updateMovimiento(@PathVariable Long id, @RequestBody MovimientoRequestDTO movimiento) {
+        try {
+            return new ResponseEntity<>(
+                    MovimientoMapper.map.movimientoToMovimientoResponseDTO(movimientoService.updateMovimiento(id, MovimientoMapper.map.movimientoRequestDTOToMovimiento(movimiento))), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 

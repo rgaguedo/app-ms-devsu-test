@@ -1,7 +1,7 @@
 package com.devsu.ms_cuenta_movimientos_api.controller;
 
 import com.devsu.ms_cuenta_movimientos_api.controller.dto.reporte.ReporteResponseDTO;
-import com.devsu.ms_cuenta_movimientos_api.service.ReporteService;
+import com.devsu.ms_cuenta_movimientos_api.service.impl.ReporteServiceImpl;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,9 +15,9 @@ import java.util.List;
 @RequestMapping("/reportes")
 public class ReporteController {
 
-    private final ReporteService reporteService;
+    private final ReporteServiceImpl reporteService;
 
-    public ReporteController(ReporteService reporteService) {
+    public ReporteController(ReporteServiceImpl reporteService) {
         this.reporteService = reporteService;
     }
 

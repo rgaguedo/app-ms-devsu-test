@@ -56,7 +56,10 @@ public class CuentaController {
     @PutMapping("/{id}")
     public ResponseEntity<CuentaResponseDTO> updateCuenta(@PathVariable Long id, @RequestBody CuentaRequestDTO cuenta) {
         try {
-            return new ResponseEntity<>(CuentaMapper.map.cuentaToCuentaResponseDTO(cuentaService.updateCuenta(id, CuentaMapper.map.cuentaRequestDTOToCliente(cuenta))), HttpStatus.OK);
+            return new ResponseEntity<>(
+                    CuentaMapper.map.cuentaToCuentaResponseDTO(cuentaService.updateCuenta(id, CuentaMapper.map.cuentaRequestDTOToCliente(cuenta))),
+                    HttpStatus.OK
+            );
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
