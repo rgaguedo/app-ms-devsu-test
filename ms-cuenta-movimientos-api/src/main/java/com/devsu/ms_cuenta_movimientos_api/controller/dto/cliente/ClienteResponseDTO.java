@@ -1,6 +1,6 @@
-package com.devsu.ms_cuenta_movimientos_api.dto;
+package com.devsu.ms_cuenta_movimientos_api.controller.dto.cliente;
 
-public class ClienteDTO {
+public class ClienteResponseDTO {
     private Long id;
     private String nombre;
     private String genero;

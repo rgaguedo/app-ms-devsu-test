@@ -1,8 +1,8 @@
-package com.devsu.ms_cuenta_movimientos_api.dto;
+package com.devsu.ms_cuenta_movimientos_api.controller.dto.reporte;
 
 import java.time.LocalDateTime;
 
-public class ReporteDTO {
+public class ReporteResponseDTO {
 
     private LocalDateTime fecha;
     private String cliente;
