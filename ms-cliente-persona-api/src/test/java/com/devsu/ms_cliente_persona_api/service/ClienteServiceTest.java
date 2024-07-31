@@ -56,28 +56,28 @@ public class ClienteServiceTest {
     }
 
     @Test
-    public void testFindAll() {
+    public void testCreateCliente() {
+        when(clienteRepository.save(any(Cliente.class))).thenReturn(cliente1);
+        Cliente savedCliente = clienteService.createCliente(cliente1);
+        assertNotNull(savedCliente);
+        assertEquals("Jose Lema", savedCliente.getNombre());
+        verify(clienteRepository, times(1)).save(cliente1);
+    }
+
+    @Test
+    public void testGetAllClientes() {
         when(clienteRepository.findAll()).thenReturn(Arrays.asList(cliente1, cliente2));
-        List<Cliente> clientes = clienteService.findAll();
+        List<Cliente> clientes = clienteService.getAllClientes();
         assertEquals(2, clientes.size());
         verify(clienteRepository, times(1)).findAll();
     }
 
     @Test
-    public void testFindById() {
+    public void testGetClienteById() {
         when(clienteRepository.findById(1L)).thenReturn(Optional.of(cliente1));
-        Cliente cliente = clienteService.findById(1L);
+        Cliente cliente = clienteService.getClienteById(1L);
         assertEquals("Jose Lema", cliente.getNombre());
         verify(clienteRepository, times(1)).findById(1L);
-    }
-
-    @Test
-    public void testSave() {
-        when(clienteRepository.save(any(Cliente.class))).thenReturn(cliente1);
-        Cliente savedCliente = clienteService.save(cliente1);
-        assertNotNull(savedCliente);
-        assertEquals("Jose Lema", savedCliente.getNombre());
-        verify(clienteRepository, times(1)).save(cliente1);
     }
 
 }

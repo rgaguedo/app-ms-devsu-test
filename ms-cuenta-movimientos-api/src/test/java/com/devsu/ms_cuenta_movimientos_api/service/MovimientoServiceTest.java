@@ -1,22 +1,22 @@
 package com.devsu.ms_cuenta_movimientos_api.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.when;
-
 import com.devsu.ms_cuenta_movimientos_api.model.Cuenta;
 import com.devsu.ms_cuenta_movimientos_api.model.Movimiento;
 import com.devsu.ms_cuenta_movimientos_api.repository.CuentaRepository;
 import com.devsu.ms_cuenta_movimientos_api.repository.MovimientoRepository;
+import com.devsu.ms_cuenta_movimientos_api.service.impl.MovimientoServiceImpl;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.MockitoAnnotations;
 
 import java.util.Optional;
 
-@ExtendWith(MockitoExtension.class)
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.when;
+
 class MovimientoServiceTest {
 
     @Mock
@@ -26,19 +26,28 @@ class MovimientoServiceTest {
     private CuentaRepository cuentaRepository;
 
     @InjectMocks
-    private MovimientoService movimientoService;
+    private MovimientoServiceImpl movimientoService;
 
-    @Test
-    public void testCreateMovimiento() throws Exception {
-        Cuenta cuenta = new Cuenta();
+    private Cuenta cuenta;
+    private Movimiento movimiento;
+
+    @BeforeEach
+    public void setUp() {
+        MockitoAnnotations.openMocks(this);
+
+        cuenta = new Cuenta();
         cuenta.setId(1L);
         cuenta.setNumeroCuenta(1654321L);
         cuenta.setSaldoInicial(1000);
 
-        Movimiento movimiento = new Movimiento();
+        movimiento = new Movimiento();
         movimiento.setCuenta(cuenta);
         movimiento.setValor(500);
 
+    }
+
+    @Test
+    public void testCreateMovimiento() throws Exception {
         when(cuentaRepository.findById(1L)).thenReturn(Optional.of(cuenta));
         when(movimientoRepository.save(movimiento)).thenReturn(movimiento);
 

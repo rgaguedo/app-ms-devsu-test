@@ -1,15 +1,16 @@
 package com.devsu.ms_cuenta_movimientos_api.service;
 
-import com.devsu.ms_cuenta_movimientos_api.dto.ClienteDTO;
+import com.devsu.ms_cuenta_movimientos_api.client.ClienteClient;
+import com.devsu.ms_cuenta_movimientos_api.controller.dto.cliente.ClienteResponseDTO;
 import com.devsu.ms_cuenta_movimientos_api.model.Cuenta;
 import com.devsu.ms_cuenta_movimientos_api.repository.CuentaRepository;
+import com.devsu.ms_cuenta_movimientos_api.service.impl.CuentaServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
 import java.util.List;
@@ -19,27 +20,29 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)
 public class CuentaServiceTest {
+
+    @Mock
+    private RestTemplate restTemplate;
 
     @Mock
     private CuentaRepository cuentaRepository;
 
-    @Mock
-    private ClienteService clienteService;
-
     @InjectMocks
-    private CuentaService cuentaService;
+    private CuentaServiceImpl cuentaService;
 
     private Cuenta cuenta1;
     private Cuenta cuenta2;
-    private ClienteDTO cliente;
+    private ClienteResponseDTO cliente;
 
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
 
-        cliente = new ClienteDTO();
+        restTemplate = mock(RestTemplate.class);
+        ClienteClient.restTemplate = restTemplate;
+
+        cliente = new ClienteResponseDTO();
         cliente.setId(1L);
         cliente.setNombre("Jose Lema");
         cliente.setGenero("Masculino");
@@ -86,14 +89,13 @@ public class CuentaServiceTest {
 
     @Test
     public void testCreateCuenta() {
-        when(clienteService.getClienteById(1L)).thenReturn(cliente);
+        when(restTemplate.getForObject(anyString(), eq(ClienteResponseDTO.class))).thenReturn(cliente);
         when(cuentaRepository.save(any(Cuenta.class))).thenReturn(cuenta1);
 
         Cuenta savedCuenta = cuentaService.createCuenta(cuenta1);
 
         assertNotNull(savedCuenta);
-        assertEquals(6934509438L, savedCuenta.getNumeroCuenta());
-        verify(clienteService, times(1)).getClienteById(1L);
+        assertEquals(cuenta1.getNumeroCuenta(), savedCuenta.getNumeroCuenta());
         verify(cuentaRepository, times(1)).save(cuenta1);
     }
 

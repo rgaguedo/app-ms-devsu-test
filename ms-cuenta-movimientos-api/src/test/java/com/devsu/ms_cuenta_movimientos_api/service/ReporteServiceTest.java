@@ -1,20 +1,25 @@
 package com.devsu.ms_cuenta_movimientos_api.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import com.devsu.ms_cuenta_movimientos_api.dto.ClienteDTO;
-import com.devsu.ms_cuenta_movimientos_api.dto.ReporteDTO;
+import com.devsu.ms_cuenta_movimientos_api.client.ClienteClient;
+import com.devsu.ms_cuenta_movimientos_api.controller.dto.cliente.ClienteResponseDTO;
+import com.devsu.ms_cuenta_movimientos_api.controller.dto.reporte.ReporteResponseDTO;
 import com.devsu.ms_cuenta_movimientos_api.model.Cuenta;
 import com.devsu.ms_cuenta_movimientos_api.model.Movimiento;
 import com.devsu.ms_cuenta_movimientos_api.repository.MovimientoRepository;
+import com.devsu.ms_cuenta_movimientos_api.service.impl.ReporteServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -24,15 +29,15 @@ import java.util.List;
 public class ReporteServiceTest {
 
     @Mock
-    private MovimientoRepository movimientoRepository;
+    private RestTemplate restTemplate;
 
     @Mock
-    private ClienteService clienteService;
+    private MovimientoRepository movimientoRepository;
 
     @InjectMocks
-    private ReporteService reporteService;
+    private ReporteServiceImpl reporteService;
 
-    private ClienteDTO cliente;
+    private ClienteResponseDTO cliente;
     private Cuenta cuenta;
     private Movimiento movimiento1;
     private Movimiento movimiento2;
@@ -43,7 +48,10 @@ public class ReporteServiceTest {
     public void setUp() {
         MockitoAnnotations.openMocks(this);
 
-        cliente = new ClienteDTO();
+        restTemplate = mock(RestTemplate.class);
+        ClienteClient.restTemplate = restTemplate;
+
+        cliente = new ClienteResponseDTO();
         cliente.setId(1L);
         cliente.setNombre("Jose Lema");
         cliente.setGenero("Masculino");
@@ -83,17 +91,16 @@ public class ReporteServiceTest {
 
     @Test
     public void testGetEstadoCuenta() {
-        when(clienteService.getClienteById(1L)).thenReturn(cliente);
+        when(restTemplate.getForObject(anyString(), eq(ClienteResponseDTO.class))).thenReturn(cliente);
         when(movimientoRepository.findByCuentaIdAndFechaBetween(eq(1L), any(LocalDateTime.class), any(LocalDateTime.class)))
                 .thenReturn(List.of(movimiento1, movimiento2));
 
-        List<ReporteDTO> reportes = reporteService.getReporte(1L, fechaInicio, fechaFin);
+        List<ReporteResponseDTO> reportes = reporteService.getReporte(1L, fechaInicio, fechaFin);
 
         assertEquals(2, reportes.size());
 
-        ReporteDTO reporte1 = reportes.get(0);
+        ReporteResponseDTO reporte1 = reportes.get(0);
         assertEquals(movimiento1.getFecha(), reporte1.getFecha());
-        assertEquals(cliente.getNombre(), reporte1.getCliente());
         assertEquals(cliente.getNombre(), reporte1.getCliente());
         assertEquals(cuenta.getNumeroCuenta(), reporte1.getNumeroCuenta());
         assertEquals(cuenta.getTipoCuenta(), reporte1.getTipoCuenta());
@@ -102,7 +109,7 @@ public class ReporteServiceTest {
         assertEquals(movimiento1.getValor(), reporte1.getMovimiento());
         assertEquals(movimiento1.getSaldo(), reporte1.getSaldoDisponible());
 
-        ReporteDTO reporte2 = reportes.get(1);
+        ReporteResponseDTO reporte2 = reportes.get(1);
         assertEquals(movimiento2.getFecha(), reporte2.getFecha());
         assertEquals(cliente.getNombre(), reporte2.getCliente());
         assertEquals(cuenta.getNumeroCuenta(), reporte2.getNumeroCuenta());
