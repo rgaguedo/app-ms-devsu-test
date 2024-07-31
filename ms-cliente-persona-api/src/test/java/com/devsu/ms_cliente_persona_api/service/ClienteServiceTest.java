@@ -60,7 +60,14 @@ public class ClienteServiceTest {
         when(clienteRepository.save(any(Cliente.class))).thenReturn(cliente1);
         Cliente savedCliente = clienteService.createCliente(cliente1);
         assertNotNull(savedCliente);
-        assertEquals("Jose Lema", savedCliente.getNombre());
+        assertEquals(cliente1.getNombre(), savedCliente.getNombre());
+        assertEquals(cliente1.getGenero(), savedCliente.getGenero());
+        assertEquals(cliente1.getEdad(), savedCliente.getEdad());
+        assertEquals(cliente1.getIdentificacion(), savedCliente.getIdentificacion());
+        assertEquals(cliente1.getDireccion(), savedCliente.getDireccion());
+        assertEquals(cliente1.getTelefono(), savedCliente.getTelefono());
+        assertEquals(cliente1.getClave(), savedCliente.getClave());
+        assertEquals(cliente1.isEstado(), savedCliente.isEstado());
         verify(clienteRepository, times(1)).save(cliente1);
     }
 
@@ -76,7 +83,14 @@ public class ClienteServiceTest {
     public void testGetClienteById() {
         when(clienteRepository.findById(1L)).thenReturn(Optional.of(cliente1));
         Cliente cliente = clienteService.getClienteById(1L);
-        assertEquals("Jose Lema", cliente.getNombre());
+        assertEquals(cliente1.getNombre(), cliente.getNombre());
+        assertEquals(cliente1.getGenero(), cliente.getGenero());
+        assertEquals(cliente1.getEdad(), cliente.getEdad());
+        assertEquals(cliente1.getIdentificacion(), cliente.getIdentificacion());
+        assertEquals(cliente1.getDireccion(), cliente.getDireccion());
+        assertEquals(cliente1.getTelefono(), cliente.getTelefono());
+        assertEquals(cliente1.getClave(), cliente.getClave());
+        assertEquals(cliente1.isEstado(), cliente.isEstado());
         verify(clienteRepository, times(1)).findById(1L);
     }
 
