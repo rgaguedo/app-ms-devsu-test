@@ -19,7 +19,7 @@ public interface CuentaMapper {
     @Mapping(source = "saldoInicial", target = "saldoInicial")
     @Mapping(source = "estado", target = "estado")
     @Mapping(source = "clienteId", target = "clienteId")
-    Cuenta cuentaRequestDTOToCliente(CuentaRequestDTO cuentaRequestDTO);
+    Cuenta cuentaRequestDTOToCuenta(CuentaRequestDTO cuentaRequestDTO);
     CuentaResponseDTO cuentaToCuentaResponseDTO(Cuenta cuenta);
     List<CuentaResponseDTO> cuentaListToCuentaResponseDTOList(List<Cuenta> cuentaList);
 
