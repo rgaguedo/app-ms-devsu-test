@@ -2,6 +2,10 @@ package com.devsu.ms_cuenta_movimientos_api.model;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
+import static com.devsu.ms_cuenta_movimientos_api.util.CommonLongUtils.generateUniqueRandomNumber;
+
 @Entity
 public class Cuenta {
     @Id
@@ -59,6 +63,11 @@ public class Cuenta {
 
     public void setClienteId(Long clienteId) {
         this.clienteId = clienteId;
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        this.numeroCuenta = generateUniqueRandomNumber();
     }
 
     @Override
