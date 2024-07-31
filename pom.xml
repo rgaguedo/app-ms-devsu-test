@@ -21,6 +21,21 @@
 		<java.version>17</java.version>
 	</properties>
 
+	<developers>
+		<developer>
+			<id>rgaguedo</id>
+			<name>Raulitho Aguedo</name>
+			<email>rgaguedo@gmail.com</email>
+			<url>https://www.linkedin.com/in/rgaguedo</url>
+			<organization>rgaguedo</organization>
+			<organizationUrl>https://www.linkedin.com/in/rgaguedo/</organizationUrl>
+			<roles>
+				<role>architect</role>
+				<role>developer</role>
+			</roles>
+		</developer>
+	</developers>
+
 	<modules>
 		<module>ms-cliente-persona-api</module>
 		<module>ms-cuenta-movimientos-api</module>
