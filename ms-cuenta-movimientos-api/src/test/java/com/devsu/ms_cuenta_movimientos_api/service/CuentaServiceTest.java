@@ -72,22 +72,6 @@ public class CuentaServiceTest {
     }
 
     @Test
-    public void testFindAll() {
-        when(cuentaRepository.findAll()).thenReturn(Arrays.asList(cuenta1, cuenta2));
-        List<Cuenta> cuentas = cuentaService.getAllCuentas();
-        assertEquals(2, cuentas.size());
-        verify(cuentaRepository, times(1)).findAll();
-    }
-
-    @Test
-    public void testFindById() {
-        when(cuentaRepository.findById(1L)).thenReturn(Optional.of(cuenta1));
-        Cuenta cuenta = cuentaService.getCuentaById(1L);
-        assertEquals(cuenta1.getNumeroCuenta(), cuenta.getNumeroCuenta());
-        verify(cuentaRepository, times(1)).findById(1L);
-    }
-
-    @Test
     public void testCreateCuenta() {
         when(restTemplate.getForObject(anyString(), eq(ClienteResponseDTO.class))).thenReturn(cliente);
         when(cuentaRepository.save(any(Cuenta.class))).thenReturn(cuenta1);
@@ -96,7 +80,37 @@ public class CuentaServiceTest {
 
         assertNotNull(savedCuenta);
         assertEquals(cuenta1.getNumeroCuenta(), savedCuenta.getNumeroCuenta());
+        assertEquals(cuenta1.getTipoCuenta(), savedCuenta.getTipoCuenta());
+        assertEquals(cuenta1.getSaldoInicial(), savedCuenta.getSaldoInicial());
+        assertEquals(cuenta1.isEstado(), savedCuenta.isEstado());
+        assertEquals(cuenta1.getClienteId(), savedCuenta.getClienteId());
+
         verify(cuentaRepository, times(1)).save(cuenta1);
+    }
+
+    @Test
+    public void testFindAll() {
+        when(cuentaRepository.findAll()).thenReturn(Arrays.asList(cuenta1, cuenta2));
+
+        List<Cuenta> cuentas = cuentaService.getAllCuentas();
+
+        assertEquals(2, cuentas.size());
+
+        verify(cuentaRepository, times(1)).findAll();
+    }
+
+    @Test
+    public void testFindById() {
+        when(cuentaRepository.findById(1L)).thenReturn(Optional.of(cuenta1));
+
+        Cuenta cuenta = cuentaService.getCuentaById(1L);
+
+        assertEquals(cuenta1.getNumeroCuenta(), cuenta.getNumeroCuenta());
+        assertEquals(cuenta1.getTipoCuenta(), cuenta.getTipoCuenta());
+        assertEquals(cuenta1.getSaldoInicial(), cuenta.getSaldoInicial());
+        assertEquals(cuenta1.isEstado(), cuenta.isEstado());
+
+        verify(cuentaRepository, times(1)).findById(1L);
     }
 
 }
