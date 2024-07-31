@@ -6,7 +6,6 @@ import com.devsu.ms_cuenta_movimientos_api.controller.dto.reporte.ReporteRespons
 import com.devsu.ms_cuenta_movimientos_api.model.Movimiento;
 import com.devsu.ms_cuenta_movimientos_api.repository.MovimientoRepository;
 import com.devsu.ms_cuenta_movimientos_api.service.ReporteService;
-import com.devsu.ms_cuenta_movimientos_api.util.CommonDateUtils;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
