@@ -24,10 +24,11 @@ public class CuentaController {
     public ResponseEntity<?> createCuenta(@RequestBody CuentaRequestDTO cuenta) {
         try {
             return new ResponseEntity<>(
-                    CuentaMapper.map.cuentaToCuentaResponseDTO(cuentaService.createCuenta(CuentaMapper.map.cuentaRequestDTOToCliente(cuenta))),
+                    CuentaMapper.map.cuentaToCuentaResponseDTO(cuentaService.createCuenta(CuentaMapper.map.cuentaRequestDTOToCuenta(cuenta))),
                     HttpStatus.CREATED
             );
         } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
@@ -57,7 +58,7 @@ public class CuentaController {
     public ResponseEntity<CuentaResponseDTO> updateCuenta(@PathVariable Long id, @RequestBody CuentaRequestDTO cuenta) {
         try {
             return new ResponseEntity<>(
-                    CuentaMapper.map.cuentaToCuentaResponseDTO(cuentaService.updateCuenta(id, CuentaMapper.map.cuentaRequestDTOToCliente(cuenta))),
+                    CuentaMapper.map.cuentaToCuentaResponseDTO(cuentaService.updateCuenta(id, CuentaMapper.map.cuentaRequestDTOToCuenta(cuenta))),
                     HttpStatus.OK
             );
         } catch (Exception e) {
