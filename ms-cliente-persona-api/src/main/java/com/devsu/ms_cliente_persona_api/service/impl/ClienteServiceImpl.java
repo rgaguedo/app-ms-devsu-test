@@ -21,25 +21,25 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
-    public Cliente save(Cliente cliente) {
+    public Cliente createCliente(Cliente cliente) {
         return clienteRepository.save(cliente);
     }
 
     @Override
-    public List<Cliente> findAll() {
+    public List<Cliente> getAllClientes() {
         List<Cliente> clientes = clienteRepository.findAll();
         if (clientes.isEmpty()) throw new ResourceNotFoundException("No existen registros.");
         return clientes;
     }
 
     @Override
-    public Cliente findById(Long id) {
+    public Cliente getClienteById(Long id) {
         return clienteRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Cliente no encontrado para este id :: " + id));
     }
 
     @Override
-    public Cliente update(Long id, Cliente clienteDetails) {
+    public Cliente updateCliente(Long id, Cliente clienteDetails) {
         Optional<Cliente> optionalCliente = clienteRepository.findById(id);
         if (optionalCliente.isPresent()) {
             Cliente cliente = optionalCliente.get();
@@ -58,7 +58,7 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
-    public ResponseEntity<?> delete(Long id) {
+    public ResponseEntity<?> deleteCliente(Long id) {
         Cliente cliente = clienteRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Cliente no encontrado para este id :: " + id));
 

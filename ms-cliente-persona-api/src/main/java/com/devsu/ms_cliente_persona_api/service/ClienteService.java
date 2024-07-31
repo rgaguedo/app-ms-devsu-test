@@ -6,9 +6,9 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface ClienteService {
-    Cliente save(Cliente cliente);
-    List<Cliente> findAll();
-    Cliente findById(Long id);
-    Cliente update(Long id, Cliente clienteDetails);
-    ResponseEntity<?> delete(Long id);
+    Cliente createCliente(Cliente cliente);
+    List<Cliente> getAllClientes();
+    Cliente getClienteById(Long id);
+    Cliente updateCliente(Long id, Cliente clienteDetails);
+    ResponseEntity<?> deleteCliente(Long id);
 }
