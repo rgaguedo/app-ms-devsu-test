@@ -12,5 +12,4 @@ public interface CuentaService {
     Cuenta getCuentaById(Long id);
     Cuenta updateCuenta(Long id, Cuenta cuentaDetails);
     ResponseEntity<?> deleteCuenta(Long id);
-    ClienteResponseDTO getCliente(Long id);
 }

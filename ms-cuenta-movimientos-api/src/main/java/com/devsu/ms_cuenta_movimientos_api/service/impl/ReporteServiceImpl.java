@@ -14,6 +14,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.devsu.ms_cuenta_movimientos_api.util.CommonDateUtils.convertToLocalDateTime;
+
 @Service
 public class ReporteServiceImpl implements ReporteService {
 
@@ -25,8 +27,8 @@ public class ReporteServiceImpl implements ReporteService {
 
     @Override
     public List<ReporteResponseDTO> getReporte(Long clienteId, Date fechaInicio, Date fechaFin) {
-        LocalDateTime fechaInicioLDT = CommonDateUtils.convertToLocalDateTime(fechaInicio);
-        LocalDateTime fechaFinLDT = CommonDateUtils.convertToLocalDateTime(fechaFin).plusDays(1).minusSeconds(1);
+        LocalDateTime fechaInicioLDT = convertToLocalDateTime(fechaInicio);
+        LocalDateTime fechaFinLDT = convertToLocalDateTime(fechaFin).plusDays(1).minusSeconds(1);
 
         ClienteResponseDTO clienteResponseDTO = ClienteClient.getClienteById(clienteId);
         if (clienteResponseDTO == null) {

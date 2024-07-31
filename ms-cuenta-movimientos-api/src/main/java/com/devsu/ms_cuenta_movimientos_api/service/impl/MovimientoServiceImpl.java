@@ -66,7 +66,6 @@ public class MovimientoServiceImpl implements MovimientoService {
         Movimiento movimiento = movimientoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Movimiento no encontrado para este id :: " + id));
 
-        movimiento.setFecha(movimientoDetails.getFecha());
         movimiento.setTipoMovimiento(movimientoDetails.getTipoMovimiento());
         movimiento.setValor(movimientoDetails.getValor());
         movimiento.setSaldo(movimientoDetails.getSaldo());

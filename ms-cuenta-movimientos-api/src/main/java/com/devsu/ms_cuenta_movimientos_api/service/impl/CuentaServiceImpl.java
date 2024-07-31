@@ -23,7 +23,7 @@ public class CuentaServiceImpl implements CuentaService {
 
     @Override
     public Cuenta createCuenta(Cuenta cuenta) {
-        ClienteResponseDTO cliente = this.getCliente(cuenta.getClienteId());
+        ClienteResponseDTO cliente = ClienteClient.getClienteById(cuenta.getClienteId());
         if (cliente == null) {
             throw new RuntimeException("Cliente no encontrado");
         }
@@ -59,11 +59,6 @@ public class CuentaServiceImpl implements CuentaService {
                 .orElseThrow(() -> new ResourceNotFoundException("Cuenta no encontrada para este id :: " + id));
         cuentaRepository.delete(cuenta);
         return new ResponseEntity<>("", HttpStatus.ACCEPTED);
-    }
-
-    @Override
-    public ClienteResponseDTO getCliente(Long id) {
-        return ClienteClient.getClienteById(id);
     }
 
 }
