@@ -13,7 +13,6 @@ public interface MovimientoMapper {
 
     MovimientoMapper map = Mappers.getMapper(MovimientoMapper.class);
 
-    @Mapping(source = "fecha", target = "fecha")
     @Mapping(source = "tipoMovimiento", target = "tipoMovimiento")
     @Mapping(source = "valor", target = "valor")
     @Mapping(source = "saldo", target = "saldo")
