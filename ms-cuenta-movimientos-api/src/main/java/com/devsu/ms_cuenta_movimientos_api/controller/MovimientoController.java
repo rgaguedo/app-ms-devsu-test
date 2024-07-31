@@ -28,21 +28,6 @@ public class MovimientoController {
         }
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<?> updateMovimiento(@PathVariable Long id, @RequestBody Movimiento movimientoDetails) {
-        Movimiento updatedMovimiento = movimientoService.updateMovimiento(id, movimientoDetails);
-        if (updatedMovimiento != null) {
-            return new ResponseEntity<>(updatedMovimiento, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("Recurso no encontrado", HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteMovimiento(@PathVariable Long id) {
-        return movimientoService.deleteMovimiento(id);
-    }
-
     @GetMapping
     public List<Movimiento> getAllMovimientos() {
         return movimientoService.getAllMovimientos();
@@ -58,4 +43,18 @@ public class MovimientoController {
         }
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateMovimiento(@PathVariable Long id, @RequestBody Movimiento movimientoDetails) {
+        Movimiento updatedMovimiento = movimientoService.updateMovimiento(id, movimientoDetails);
+        if (updatedMovimiento != null) {
+            return new ResponseEntity<>(updatedMovimiento, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Recurso no encontrado", HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteMovimiento(@PathVariable Long id) {
+        return movimientoService.deleteMovimiento(id);
+    }
 }

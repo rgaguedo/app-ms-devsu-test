@@ -22,27 +22,48 @@ public class ClienteController {
 
     @PostMapping
     public ResponseEntity<ClienteResponseDTO> createCliente(@RequestBody ClienteRequestDTO cliente) {
-        return new ResponseEntity<>(ClienteMapper.map.clienteToClienteResponseDTO(clienteService.save(ClienteMapper.map.clienteRequestToCliente(cliente))), HttpStatus.CREATED);
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<ClienteResponseDTO> updateCliente(@PathVariable Long id, @RequestBody ClienteRequestDTO cliente) {
-        return new ResponseEntity<>(ClienteMapper.map.clienteToClienteResponseDTO(clienteService.update(id, ClienteMapper.map.clienteRequestToCliente(cliente))), HttpStatus.ACCEPTED);
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteCliente(@PathVariable Long id) {
-        return clienteService.delete(id);
+        try {
+            return new ResponseEntity<>(
+                    ClienteMapper.map.clienteToClienteResponseDTO(clienteService.createCliente(ClienteMapper.map.clienteRequestToCliente(cliente))),
+                    HttpStatus.CREATED
+            );
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping
     public ResponseEntity<List<ClienteResponseDTO>> getAllClientes() {
-        return new ResponseEntity<>(ClienteMapper.map.clienteListToClienteResponseDTO(clienteService.findAll()), HttpStatus.OK);
+        try {
+            return new ResponseEntity<>(
+                    ClienteMapper.map.clienteListToClienteResponseDTO(clienteService.getAllClientes()),
+                    HttpStatus.OK
+            );
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ClienteResponseDTO> getClienteById(@PathVariable Long id) {
-        return new ResponseEntity<>(ClienteMapper.map.clienteToClienteResponseDTO(clienteService.findById(id)), HttpStatus.OK);
+        try {
+            return new ResponseEntity<>(
+                    ClienteMapper.map.clienteToClienteResponseDTO(clienteService.getClienteById(id)),
+                    HttpStatus.OK
+            );
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ClienteResponseDTO> updateCliente(@PathVariable Long id, @RequestBody ClienteRequestDTO cliente) {
+        return new ResponseEntity<>(ClienteMapper.map.clienteToClienteResponseDTO(clienteService.updateCliente(id, ClienteMapper.map.clienteRequestToCliente(cliente))), HttpStatus.ACCEPTED);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteCliente(@PathVariable Long id) {
+        return clienteService.deleteCliente(id);
     }
 
 }
