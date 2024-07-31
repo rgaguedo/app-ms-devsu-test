@@ -5,7 +5,7 @@ import org.springframework.web.client.RestTemplate;
 
 public class ClienteClient {
 
-    public static RestTemplate restTemplate;
+    public static RestTemplate restTemplate = new RestTemplate();
 
     public static ClienteResponseDTO getClienteById(Long clienteId) {
         return restTemplate.getForObject("http://cliente-persona:8080/clientes/" + clienteId, ClienteResponseDTO.class);
