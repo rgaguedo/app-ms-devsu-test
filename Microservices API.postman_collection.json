@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "8fdb747f-b624-4d5d-9dfb-661c25060315",
+		"_postman_id": "8395e812-2925-49b3-ab00-4723e39d0fa4",
 		"name": "Microservices API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "5622113"
@@ -16,13 +16,12 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"persona\": {\n    \"nombre\": \"Jose Lema\",\n    \"genero\": \"Masculino\",\n    \"edad\": 30,\n    \"identificacion\": \"1234567890\",\n    \"direccion\": \"Otavalo sn y principal\",\n    \"telefono\": \"098254785\"\n  },\n  \"clave\": \"1234\",\n  \"estado\": true\n}"
+							"raw": "{\n    \"nombre\": \"Jose Lema\",\n    \"genero\": \"Masculino\",\n    \"edad\": 30,\n    \"identificacion\": \"1234567890\",\n    \"direccion\": \"Otavalo sn y principal\",\n    \"telefono\": \"098254785\",\n    \"clave\": \"1234\",\n    \"estado\": true\n}"
 						},
 						"url": {
 							"raw": "http://localhost:8080/clientes",
@@ -84,13 +83,12 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"persona\": {\n    \"nombre\": \"Jose Lema Updated\",\n    \"genero\": \"Masculino\",\n    \"edad\": 31,\n    \"identificacion\": \"1234567890\",\n    \"direccion\": \"Otavalo sn y principal\",\n    \"telefono\": \"098254785\"\n  },\n  \"contraseña\": \"1234\",\n  \"estado\": true\n}"
+							"raw": "{\n    \"nombre\": \"Jose Lema Updated\",\n    \"genero\": \"Masculino\",\n    \"edad\": 31,\n    \"identificacion\": \"1234567890\",\n    \"direccion\": \"Otavalo sn y principal\",\n    \"telefono\": \"098254785\",\n    \"contraseña\": \"1234\",\n    \"estado\": true\n}"
 						},
 						"url": {
 							"raw": "http://localhost:8080/clientes/1",
@@ -139,13 +137,12 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"tipoCuenta\": \"Ahorros\",\n  \"saldoInicial\": 2000,\n  \"estado\": true,\n  \"cliente\": {\n    \"clienteId\": 1\n  }\n}"
+							"raw": "{\n    \"tipoCuenta\": \"Ahorros\",\n    \"saldoInicial\": 2000,\n    \"estado\": true,\n    \"clienteId\": 1\n}"
 						},
 						"url": {
 							"raw": "http://localhost:8081/cuentas",
@@ -207,8 +204,7 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							}
 						],
 						"body": {
@@ -257,13 +253,12 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"fecha\": \"2024-07-28T00:00:00.000+00:00\",\n  \"tipoMovimiento\": \"Deposito\",\n  \"valor\": 1000,\n  \"cuenta\": {\n    \"id\": 2\n  }\n}"
+							"raw": "{\n  \"tipoMovimiento\": \"Deposito\",\n  \"valor\": 1000,\n  \"cuenta\": {\n    \"id\": 1\n  }\n}"
 						},
 						"url": {
 							"raw": "http://localhost:8081/movimientos",
@@ -325,13 +320,12 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
+								"value": "application/json"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"fecha\": \"2024-07-28T00:00:00.000+00:00\",\n  \"tipoMovimiento\": \"Retiro\",\n  \"valor\": 500,\n  \"saldo\": 1500,\n  \"cuenta\": {\n    \"numeroCuenta\": 1\n  }\n}"
+							"raw": "{\n    \"tipoMovimiento\": \"Retiro\",\n    \"valor\": 500,\n    \"saldo\": 1500,\n    \"cuenta\": {\n        \"id\": 1\n    }\n}"
 						},
 						"url": {
 							"raw": "http://localhost:8081/movimientos/1",
